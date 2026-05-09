@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Vyankatesh Rides | Nashik</title>
+    <style>
+        :root {
+            --bg: #fdf9f3;
+            --surface: #ffffff;
+            --surface-alt: #fef8f0;
+            --primary: #c4823c;
+            --primary-dark: #a05e1f;
+            --primary-light: #f0d5b8;
+            --accent: #2c5f4b;
+            --accent-light: #e8f2ed;
+            --text: #2d2218;
+            --text-secondary: #6b5d4f;
+            --text-muted: #9b8b78;
+            --border: #e8ddd0;
+            --shadow-sm: 0 1px 3px rgba(44, 24, 8, 0.06);
+            --shadow-md: 0 4px 20px rgba(44, 24, 8, 0.08);
+            --shadow-lg: 0 12px 40px rgba(44, 24, 8, 0.12);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --font-heading: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse at 15% 20%, rgba(196, 130, 60, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 85% 75%, rgba(44, 95, 75, 0.03) 0%, transparent 60%);
+        }
+
+        .why-section {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .why-section h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .why-section .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .why-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.6rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid transparent;
+            text-align: center;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border);
+        }
+
+        .why-icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .why-card.expanded .why-icon {
+            transform: scale(1.1);
+        }
+
+        .why-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .why-short {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0.4rem;
+        }
+
+        .why-extra {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            margin-top: 0;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            text-align: left;
+            background: var(--surface-alt);
+            border-radius: var(--radius-sm);
+            padding: 0 1rem;
+        }
+
+        .why-card.expanded .why-extra {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+        }
+
+        .expand-hint {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .why-card.expanded .expand-hint {
+            opacity: 0;
+        }
+
+        @media (max-width: 600px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .why-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="why-section">
+        <h2>Why Us</h2>
+        <p class="subtitle">Because your ride should be more than just transport — tap any card to learn more</p>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <span class="why-icon">🧘</span>
+                <h4>Calm & Respectful</h4>
+                <p class="why-short">A quiet, stress-free environment — no loud music unless you ask. The ride is your time to relax.</p>
+                <div class="why-extra">
+                    <p>We understand that a ride can be a moment of peace. Whether you prefer silence, soft instrumental music, or just the wind — the atmosphere is entirely yours. Vyankatesh respects your mood and personal space at all times.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+
+            <div class="why-card">
+                <span class="why-icon">🗺️</span>
+                <h4>Nashik Insider</h4>
+                <p class="why-short">Deep knowledge of Nashik city, villages, vineyards, and hidden scenic routes. Not just a driver, a local guide.</p>
+                <div class="why-extra">
+                    <p>Born and raised in Nashik, Vyankatesh knows every shortcut, every viewpoint, every temple story. Want the best chai near Gangapur Dam or a quiet spot at Sula? You'll get recommendations no map can offer.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+
+            <div class="why-card">
+                <span class="why-icon">🛡️</span>
+                <h4>Safety First</h4>
+                <p class="why-short">Well-maintained bike, spare helmet, verified identity, and a ride style that prioritises your comfort.</p>
+                <div class="why-extra">
+                    <p>Your safety is non-negotiable. The bike undergoes regular checks, helmets are sanitised before every ride, and Vyankatesh's identity is verified. He rides at a speed you're comfortable with, always defensive and attentive.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+
+            <div class="why-card">
+                <span class="why-icon">📸</span>
+                <h4>Flexible Stops</h4>
+                <p class="why-short">Photo breaks, chai stops, temple visits — the journey adapts to you, not the other way around.</p>
+                <div class="why-extra">
+                    <p>Spotted a beautiful sunset? Want to stop for a quick vada pav? No problem. This isn't a fixed-route taxi — the ride bends to your whims, with no extra charges for spontaneous stops that make the journey memorable.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+
+            <div class="why-card">
+                <span class="why-icon">🧹</span>
+                <h4>Clean & Tidy</h4>
+                <p class="why-short">The bike is always spotless, and the riding gear fresh — a small detail that makes a big difference.</p>
+                <div class="why-extra">
+                    <p>A clean bike sets the tone for a pleasant ride. We take pride in presenting a sparkling machine and fresh gear every single time. It’s that little extra care that turns a simple ride into a premium experience.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+
+            <div class="why-card">
+                <span class="why-icon">🤝</span>
+                <h4>Trusted by Locals</h4>
+                <p class="why-short">Reliable, punctual, and recommended by people across Nashik. A reputation built one ride at a time.</p>
+                <div class="why-extra">
+                    <p>Word of mouth is our oldest marketing. Students, families, solo travellers — they all come back. Vyankatesh has built a circle of trust through consistency, kindness, and showing up when promised.</p>
+                </div>
+                <div class="expand-hint">Tap to read more</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            const whyCards = document.querySelectorAll('.why-card');
+            whyCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Toggle expanded state on the clicked card
+                    this.classList.toggle('expanded');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

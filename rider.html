@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyankatesh Rides | Nashik – Your Peaceful Ride Companion</title>
+    <style>
+        :root {
+            --primary: #c4823c;
+            --primary-dark: #a05e1f;
+            --primary-light: #f0d5b8;
+            --accent: #2c5f4b;
+            --text: #2d2218;
+            --text-secondary: #6b5d4f;
+            --text-light: #f5f0e8;
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.15);
+            --radius-sm: 12px;
+            --radius: 20px;
+            --font-heading: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text);
+            line-height: 1.6;
+            position: relative;
+            min-height: 10vh;
+            /* 🔽 REPLACE THIS URL WITH YOUR OWN BACKGROUND IMAGE 🔽 */
+            background: url("assets/images/image.png") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Dark overlay for readability */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .page-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hero / intro */
+        .hero {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.25);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 650px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        .hero h1 span {
+            color: #f5d5a8;
+            font-style: italic;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        .hero .btn-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #25d366;
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37,211,102,0.3);
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+        .hero .btn-wa:hover {
+            background: #1ebc59;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(37,211,102,0.5);
+        }
+
+        /* Rider grid section */
+        .rider-grid-wrapper {
+            width: 100%;
+            margin-top: 2rem;
+        }
+        .rider-grid-wrapper h2 {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            font-weight: 400;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .rider-grid-wrapper .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .rider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.6rem;
+        }
+
+        .rider-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.4rem 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            text-align: center;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rider-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .rider-icon {
+            font-size: 2.6rem;
+            margin-bottom: 0.7rem;
+            transition: transform 0.3s;
+        }
+        .rider-card.expanded .rider-icon {
+            transform: scale(1.1);
+        }
+
+        .rider-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .rider-short {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0.4rem;
+        }
+
+        .rider-extra {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            margin-top: 0;
+            font-size: 0.9rem;
+            color: #3e3a35;
+            line-height: 1.7;
+            text-align: left;
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .rider-card.expanded .rider-extra {
+            max-height: 280px;
+            opacity: 1;
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+        }
+
+        .expand-hint {
+            font-size: 0.7rem;
+            color: #6b5d4f;
+            margin-top: 0.6rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .rider-card.expanded .expand-hint {
+            opacity: 0;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2rem; }
+            .rider-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <!-- Hero section with WhatsApp booking button -->
+        <div class="hero">
+            <h1>Ride <span>Peacefully</span> in Nashik</h1>
+            <p>Your calm, trusted companion for city rides, temple visits, vineyards & hidden gems.</p>
+            <a href="https://wa.me/919960340222?text=Hi%20Vyankatesh%2C%20I'd%20like%20to%20book%20a%20ride" class="btn-wa" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Book via WhatsApp
+            </a>
+        </div>
+
+        <!-- Rider Cards Grid -->
+        <div class="rider-grid-wrapper">
+            <h2>Meet Your Rider</h2>
+            <p class="subtitle">Tap any card to discover the person behind the handlebars</p>
+            <div class="rider-grid">
+                <div class="rider-card">
+                    <span class="rider-icon">🏍️</span>
+                    <h4>Peaceful Explorer</h4>
+                    <p class="rider-short">Loves open roads, nature, and the calm of a quiet ride.</p>
+                    <div class="rider-extra">
+                        <p>I genuinely enjoy peaceful rides, open roads, and nature. Over the years, I’ve explored local routes, temples, vineyards, sunrise points, and mountain roads — places most visitors never see properly.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+                <div class="rider-card">
+                    <span class="rider-icon">🗺️</span>
+                    <h4>Nashik Insider</h4>
+                    <p class="rider-short">Knows every hidden spot, from ancient temples to quiet vineyards.</p>
+                    <div class="rider-extra">
+                        <p>I’ve uncovered quiet places, hidden sunset points, and secret chai stops that no map will show you. Whether you want a spiritual temple visit or a serene vineyard view, I’ll take you there effortlessly.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+                <div class="rider-card">
+                    <span class="rider-icon">🧘</span>
+                    <h4>Your Comfort First</h4>
+                    <p class="rider-short">Adapts to your vibe — silence, music, chat, or photo breaks.</p>
+                    <div class="rider-extra">
+                        <p>Some people love silence, others enjoy conversations or soft music. I adapt completely to the experience you want. Photo stops, scenic detours, or just a slow, calm cruise — it's all about your comfort.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+                <div class="rider-card">
+                    <span class="rider-icon">🧹</span>
+                    <h4>Clean & Punctual</h4>
+                    <p class="rider-short">Spotless bike, fresh gear, always on time — every single ride.</p>
+                    <div class="rider-extra">
+                        <p>I believe small things create the best journeys. A clean bike, a fresh helmet, respectful behaviour, and absolute punctuality are non‑negotiable for me. You’ll always find me ready and smiling.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+                <div class="rider-card">
+                    <span class="rider-icon">🌄</span>
+                    <h4>Flexible Journeys</h4>
+                    <p class="rider-short">Short rides, sunset chases, vineyard loops — all smooth & memorable.</p>
+                    <div class="rider-extra">
+                        <p>From a quick city drop to a relaxed vineyard tour, a temple visit or an evening sunset ride — every journey is tailored. I make sure your ride is smooth, comfortable, and memorable.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+                <div class="rider-card">
+                    <span class="rider-icon">✨</span>
+                    <h4>More Than a Ride</h4>
+                    <p class="rider-short">It's about the moment, the road, and the experience.</p>
+                    <div class="rider-extra">
+                        <p>I don’t see this as just transportation. I want you to feel relaxed, safe, and free. More than just a ride — the goal is to help you enjoy the experience, the road, and the moment. That’s my promise.</p>
+                    </div>
+                    <div class="expand-hint">Tap to read more</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const cards = document.querySelectorAll('.rider-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
