@@ -86,11 +86,13 @@
         document.querySelectorAll('.faq-q').forEach(q => {
             q.addEventListener('click', function() {
                 const a = this.nextElementSibling;
-                const isOpen = a.style.display === 'block';
+                const isOpen = a && a.style.display === 'block';
                 document.querySelectorAll('.faq-a').forEach(x => x.style.display = 'none');
                 document.querySelectorAll('.faq-q').forEach(x => x.classList.remove('open'));
-                if (!isOpen) { a.style.display = 'block';
-                    this.classList.add('open'); }
+                if (!isOpen && a) {
+                    a.style.display = 'block';
+                    this.classList.add('open');
+                }
             });
         });
 
