@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Ride — Vyankatesh | Nashik</title>
+    <style>
+        :root {
+            --bg: #fdf9f3;
+            --surface: #ffffff;
+            --surface-alt: #fef8f0;
+            --primary: #c4823c;
+            --primary-dark: #a05e1f;
+            --primary-light: #f0d5b8;
+            --accent: #2c5f4b;
+            --accent-light: #e8f2ed;
+            --text: #2d2218;
+            --text-secondary: #6b5d4f;
+            --text-muted: #9b8b78;
+            --border: #e8ddd0;
+            --shadow-sm: 0 1px 3px rgba(44, 24, 8, 0.06);
+            --shadow-md: 0 4px 20px rgba(44, 24, 8, 0.08);
+            --shadow-lg: 0 12px 40px rgba(44, 24, 8, 0.12);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --font-heading: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse at 15% 20%, rgba(196, 130, 60, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 85% 75%, rgba(44, 95, 75, 0.03) 0%, transparent 60%);
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.45rem 1.1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        .header-badge .dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 2.7rem);
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+        }
+        .header h1 span {
+            color: var(--primary);
+            font-style: italic;
+        }
+        .header .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+        }
+
+        /* Booking Form Card */
+        .booking-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 2rem 2rem 1.8rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .booking-card h2 {
+            font-family: var(--font-heading);
+            font-size: 1.7rem;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .booking-card .form-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.4rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            background: #fefdfb;
+            transition: 0.2s ease;
+            outline: none;
+            resize: vertical;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(196, 130, 60, 0.15);
+            background: #fff;
+        }
+        .form-group textarea {
+            min-height: 80px;
+        }
+
+        .location-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .location-chip {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .location-chip:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+        .location-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.8rem;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.7rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+            border: none;
+            font-family: var(--font-body);
+        }
+        .btn:hover {
+            background: #1ebc59;
+            box-shadow: 0 8px 22px rgba(37, 211, 102, 0.45);
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary-dark);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(196, 130, 60, 0.15);
+        }
+        .live-location-btn {
+            background: #faf7f2;
+            border: 1.5px dashed var(--primary);
+            color: var(--primary-dark);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .live-location-btn:hover {
+            background: var(--primary-light);
+        }
+        .live-location-btn.sent {
+            background: #e8f5e9;
+            border-color: #2c5f4b;
+            color: #2c5f4b;
+        }
+
+        /* Steps (How It Works) */
+        .steps-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 1.5rem;
+        }
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            left: 31px;
+            top: 18px;
+            bottom: 18px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary-light), var(--primary) 20%, var(--primary) 80%, var(--primary-light));
+            border-radius: 1px;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .step-card {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 1.4rem;
+            padding: 1.2rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .step-number-wrap {
+            flex-shrink: 0;
+            z-index: 2;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            box-shadow: var(--shadow-sm);
+        }
+        .step-card:hover .step-number {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg), 0 0 0 10px rgba(196, 130, 60, 0.1);
+            transform: scale(1.06);
+        }
+        .step-content {
+            flex: 1;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.6rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid transparent;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .step-card:hover .step-content {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border);
+            transform: translateX(4px);
+        }
+        .step-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px 0 0 4px;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.35s ease;
+        }
+        .step-card:hover .step-content::after {
+            transform: scaleY(1);
+        }
+        .step-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .step-icon-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 0.25rem 0.7rem;
+            border-radius: 50px;
+            margin-bottom: 0.6rem;
+        }
+        .step-content p,
+        .step-content ul li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+        }
+        .step-content ul li {
+            padding-left: 1.2rem;
+            position: relative;
+            margin-bottom: 0.2rem;
+        }
+        .step-content ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .premium-line-wrap {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .premium-line {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--primary-dark);
+            padding: 1.2rem 2rem;
+            position: relative;
+        }
+        .premium-line::before,
+        .premium-line::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1.5px;
+            border-radius: 1px;
+            background: linear-gradient(to right, transparent, var(--primary-light), var(--primary), var(--primary-light), transparent);
+        }
+        .premium-line::before {
+            top: 0;
+            width: 80%;
+        }
+        .premium-line::after {
+            bottom: 0;
+            width: 60%;
+        }
+        .premium-icon {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 1.5rem 1rem 3rem;
+            }
+            .booking-card {
+                padding: 1.5rem 1.2rem;
+            }
+            .steps-container::before {
+                left: 24px;
+            }
+            .step-number-wrap {
+                width: 48px;
+                height: 48px;
+            }
+            .step-number {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+            }
+            .step-card {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <header class="header">
+            <div class="header-badge"><span class="dot"></span> Vyankatesh Rides · Nashik</div>
+            <h1>Book Your <span>Ride</span></h1>
+            <p class="subtitle">Fill in your details — we'll open WhatsApp ready to send</p>
+        </header>
+
+        <!-- Booking Form -->
+        <section class="booking-card" id="bookingFormCard">
+            <h2>🚀 Quick Booking</h2>
+            <p class="form-subtitle">All fields will be sent directly to Vyankatesh on WhatsApp</p>
+
+            <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" id="customerName" placeholder="e.g., Anjali Sharma" required>
+            </div>
+            <div class="form-group">
+                <label>Contact Number (optional)</label>
+                <input type="tel" id="customerContact" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+                <label>Pickup Location *</label>
+                <input type="text" id="pickupLocation" placeholder="Where should we pick you up?" required>
+                <div class="location-chips" id="pickupChips">
+                    <!-- chips injected via JS -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Destination *</label>
+                <input type="text" id="destination" placeholder="Where would you like to go?" required>
+                <div class="location-chips" id="destChips">
+                    <!-- chips injected via JS -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Preferred Time</label>
+                <input type="text" id="preferredTime" placeholder="e.g., Tomorrow 10 AM, or just 'Evening'">
+            </div>
+            <div class="form-group">
+                <label>Special Requests</label>
+                <textarea id="specialRequests" placeholder="Music, silence, photo stops, extra helmet…"></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn" id="sendWhatsAppBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Send via WhatsApp
+                </button>
+                <button type="button" class="btn btn-outline live-location-btn" id="liveLocationBtn">
+                    📍 Share My Live Location
+                </button>
+            </div>
+            <p style="font-size:0.8rem; margin-top:1rem; color:var(--text-muted);">
+                Clicking send will open WhatsApp with your message. You can review before sending.
+            </p>
+        </section>
+
+        <!-- How It Works Steps -->
+        <div class="steps-container" id="stepsContainer">
+            <article class="step-card" data-step="1">
+                <div class="step-number-wrap"><div class="step-number">1</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">🏍️ Choose Your Ride</span>
+                    <h3>Choose Your Ride</h3>
+                    <p>Select the type of experience — peaceful city ride, café hopping, temple visit, vineyard trip, or scenic long drive around Nashik.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="2">
+                <div class="step-number-wrap"><div class="step-number">2</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">💬 Send Your Request</span>
+                    <h3>Send Your Request</h3>
+                    <p>Use the form above or message directly on WhatsApp (919960340222) with pickup, destination, time, and any special requests.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="3">
+                <div class="step-number-wrap"><div class="step-number">3</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">✅ Ride Confirmation</span>
+                    <h3>Ride Confirmation</h3>
+                    <p>You receive availability, estimated pricing, pickup timing, and safety details.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="4">
+                <div class="step-number-wrap"><div class="step-number">4</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">🛡️ Safe Pickup</span>
+                    <h3>Safe Pickup</h3>
+                    <p>Vyankatesh arrives on time with clean bike, safety helmet, calm environment, verified identity.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="5">
+                <div class="step-number-wrap"><div class="step-number">5</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">🌿 Enjoy the Journey</span>
+                    <h3>Enjoy the Journey</h3>
+                    <p>Smooth riding, scenic routes, flexible stops, local recommendations, peaceful atmosphere.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="6">
+                <div class="step-number-wrap"><div class="step-number">6</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">🏁 Reach Safely</span>
+                    <h3>Reach Safely</h3>
+                    <p>Drop-off at your destination with complete comfort and safety support.</p>
+                </div>
+            </article>
+            <article class="step-card" data-step="7">
+                <div class="step-number-wrap"><div class="step-number">7</div></div>
+                <div class="step-content">
+                    <span class="step-icon-label">🔁 Stay Connected</span>
+                    <h3>Stay Connected</h3>
+                    <p>Need another ride? Message directly on WhatsApp for priority support.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="premium-line-wrap">
+            <span class="premium-icon">✨</span>
+            <p class="premium-line">"More than a ride — a calm, trusted experience built around comfort, safety, and peace."</p>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            // ── WhatsApp number ──────────────────────────────────────
+            const WHATSAPP_NUMBER = '919960340222'; // +91 9960340222
+
+            // ── Nashik and nearby locations ──────────────────────────
+            const nashikLocations = [
+                "Nashik Road Railway Station",
+                "CBS (Central Bus Stand)",
+                "Panchavati",
+                "Gangapur Road",
+                "College Road",
+                "Trimbakeshwar",
+                "Sula Vineyards",
+                "Pandav Leni (Buddha Caves)",
+                "Anjaneri Hills",
+                "Kalaram Temple",
+                "Muktidham",
+                "Sita Gufa",
+                "Deolali Camp",
+                "Igatpuri",
+                "Sinnar",
+                "Ozar",
+                "Gangapur Dam",
+                "Dugarwadi Waterfall",
+                "Bhandardara",
+                "Saptashrungi",
+                "Vani",
+                "Nashik City Centre"
+            ];
+
+            // ── Populate location chips ──────────────────────────────
+            function populateChips(containerId, targetInputId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
+                nashikLocations.forEach(loc => {
+                    const chip = document.createElement('span');
+                    chip.className = 'location-chip';
+                    chip.textContent = loc;
+                    chip.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const input = document.getElementById(targetInputId);
+                        if (input) {
+                            input.value = loc;
+                            // Optional: highlight active chip
+                            container.querySelectorAll('.location-chip').forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                    container.appendChild(chip);
+                });
+            }
+            populateChips('pickupChips', 'pickupLocation');
+            populateChips('destChips', 'destination');
+
+            // ── Form elements ────────────────────────────────────────
+            const nameInput = document.getElementById('customerName');
+            const contactInput = document.getElementById('customerContact');
+            const pickupInput = document.getElementById('pickupLocation');
+            const destInput = document.getElementById('destination');
+            const timeInput = document.getElementById('preferredTime');
+            const specialInput = document.getElementById('specialRequests');
+            const sendBtn = document.getElementById('sendWhatsAppBtn');
+            const liveBtn = document.getElementById('liveLocationBtn');
+            let liveCoordinates = null; // { lat, lon }
+
+            // ── Compose WhatsApp message ─────────────────────────────
+            function composeMessage() {
+                const name = nameInput.value.trim() || '[Name not provided]';
+                const contact = contactInput.value.trim() || '[Not provided]';
+                const pickup = pickupInput.value.trim() || '[Pickup location missing]';
+                const destination = destInput.value.trim() || '[Destination missing]';
+                const time = timeInput.value.trim() || '[Flexible]';
+                const special = specialInput.value.trim() || 'None';
+
+                let msg = `Hello Vyankatesh, I'd like to book a ride.%0A%0A`;
+                msg += `👤 Name: ${name}%0A`;
+                msg += `📞 Contact: ${contact}%0A`;
+                msg += `📍 Pickup: ${pickup}%0A`;
+                msg += `🏁 Destination: ${destination}%0A`;
+                msg += `🕒 Preferred Time: ${time}%0A`;
+                msg += `📝 Special Requests: ${special}%0A`;
+
+                if (liveCoordinates) {
+                    msg += `%0A🌍 Live Pickup Location:%0Ahttps://maps.google.com/?q=${liveCoordinates.lat},${liveCoordinates.lon}`;
+                }
+
+                msg += `%0A%0AThank you!`;
+                return msg;
+            }
+
+            // ── Open WhatsApp ────────────────────────────────────────
+            function openWhatsApp() {
+                const message = composeMessage();
+                const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+                window.open(url, '_blank');
+            }
+
+            // ── Send button click ────────────────────────────────────
+            sendBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!pickupInput.value.trim() || !destInput.value.trim()) {
+                    alert('Please fill at least Pickup Location and Destination.');
+                    pickupInput.focus();
+                    return;
+                }
+                openWhatsApp();
+            });
+
+            // ── Live Location button ─────────────────────────────────
+            liveBtn.addEventListener('click', function() {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser. Please type your pickup address manually.');
+                    return;
+                }
+
+                liveBtn.textContent = '📍 Getting location...';
+                liveBtn.disabled = true;
+
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        liveCoordinates = { lat, lon };
+
+                        // Optionally update pickup field with a note
+                        const currentPickup = pickupInput.value;
+                        if (!currentPickup.includes('Live:')) {
+                            pickupInput.value = currentPickup ? currentPickup + ' (Live location attached)' : 'Live location attached';
+                        }
+
+                        liveBtn.textContent = '✅ Location Captured';
+                        liveBtn.classList.add('sent');
+                        liveBtn.disabled = false;
+                        // Flash notification style
+                        setTimeout(() => {
+                            if (liveBtn.classList.contains('sent')) {
+                                liveBtn.textContent = '📍 Share My Live Location';
+                                liveBtn.classList.remove('sent');
+                            }
+                        }, 3000);
+                    },
+                    function(error) {
+                        alert('Unable to retrieve location. Please allow location access or enter address manually.');
+                        liveBtn.textContent = '📍 Share My Live Location';
+                        liveBtn.disabled = false;
+                        console.error(error);
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 10000
+                    }
+                );
+            });
+
+            // ── Step card reveal animation ───────────────────────────
+            const stepCards = document.querySelectorAll('.step-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const stepNum = parseInt(card.dataset.step) || 0;
+                        setTimeout(() => card.classList.add('visible'), stepNum * 80);
+                        observer.unobserve(card);
+                    }
+                });
+            }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+            stepCards.forEach(card => observer.observe(card));
+
+            // Show any visible on load
+            window.addEventListener('load', () => {
+                stepCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const stepNum = parseInt(card.dataset.step) || 0;
+                        setTimeout(() => card.classList.add('visible'), stepNum * 80);
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
